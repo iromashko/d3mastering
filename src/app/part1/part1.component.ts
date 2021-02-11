@@ -53,6 +53,12 @@ export class Part1Component implements OnInit {
       .attr('r', (d) => {
         return d.age;
       })
-      .attr('fill', 'red');
+      .attr('fill', (d) => {
+        if (d.name === 'Tony') {
+          return 'blue';
+        } else {
+          return 'red';
+        }
+      });
   }
 }
