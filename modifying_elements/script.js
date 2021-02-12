@@ -1,7 +1,11 @@
-let h1 = d3.select('h1').html();
+let svg1 = d3.select('#svg1');
 
-d3.select('h1').html('html')
-console.log(h1);
+svg1.insert('text').text('Hello Wordl').attr('x', '5').attr('y', '20');
+
+// let h1 = d3.select('h1').html();
+
+// d3.select('h1').html('html')
+// console.log(h1);
 
 // let div1 = d3.select('#title');
 
