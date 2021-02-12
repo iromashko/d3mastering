@@ -1,0 +1,33 @@
+* {
+  font-family: 'Inter';
+}
+
+body {
+  display: grid;
+  place-items: center center;
+}
+
+svg {
+  padding-top: 20px;
+}
+
+.circle, .square, .rectange {
+  fill: rgb(248, 248, 248);
+}
+
+button {
+  border-color: gray;
+  border-style: solid;
+  color: gray;
+  font-size: 22px;
+  padding: 10px 30px;
+  border-radius: 10px;
+  margin: 10px;
+  cursor: pointer;
+  text-align: center;
+  background-color: #fff;
+
+  &:focus {
+    outline: none;
+  }
+}

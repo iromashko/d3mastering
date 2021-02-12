@@ -15,11 +15,57 @@
       integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/projects/coloring-elements/style.css" />
     <title>Coloring Elements</title>
   </head>
   <body>
-    <h1>Coloring Elements</h1>
+    <!-- <div id="title">
+      <h1>Coloring Elements</h1>
+    </div> -->
+
+    <div class="buttons">
+      <button type="submit" value="select">select</button>
+      <button type="submit" value="selectAll">selectAll</button>
+      <button type="submit" value="filterOdd">filterOdd</button>
+      <button type="submit" value="filterEven">filterEven</button>
+    </div>
+
+    <div class="circles">
+      <svg width="400" height="100">
+        <circle class="circle" cx="50" cy="50" r="50"></circle>
+        <circle class="circle" cx="150" cy="50" r="50"></circle>
+        <circle class="circle" cx="250" cy="50" r="50"></circle>
+        <circle class="circle" cx="350" cy="50" r="50"></circle>
+      </svg>
+    </div>
+
+    <div class="squares">
+      <svg width="400" height="100">
+        <rect class="square" x="5" y="5" width="90" height="90"></rect>
+        <rect class="square" x="105" y="5" width="90" height="90"></rect>
+        <rect class="square" x="205" y="5" width="90" height="90"></rect>
+        <rect class="square" x="305" y="5" width="90" height="90"></rect>
+      </svg>
+    </div>
+
+    <div class="rects">
+      <svg width="400" height="100">
+        <rect class="rectangle" x="0" y="0" width="400" height="20"></rect>
+        <rect class="rectangle" x="0" y="25" width="400" height="20"></rect>
+        <rect class="rectangle" x="0" y="50" width="400" height="20"></rect>
+        <rect class="rectangle" x="0" y="75" width="400" height="20"></rect>
+      </svg>
+    </div>
+
+    <div id="output">
+      <h3></h3>
+    </div>
+
     <script src="d3.min.js"></script>
     <script src="/projects/coloring-elements/script.js"></script>
   </body>
