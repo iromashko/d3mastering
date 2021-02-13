@@ -141,6 +141,199 @@ document
     choiceMap.set('PG', d3.select('#cbpg').property('checked'));
 
     if (Array.from(choiceMap.values()).includes(true)) {
-      document.getElementById('feedback').innerText = ''
+      document.getElementById('feedback').innerText = '';
+      d3.selectAll('#charts').selectAll('div').html(null);
+      d3.selectAll('#charts').selectAll('svg').html(null);
+      createSelection(choiceMap);
+    } else {
+      d3.selectAll('#charts').selectAll('div').html(null);
+      d3.selectAll('#charts').selectAll('svg').html(null);
+      document.getElementById('feedback').innerText =
+        'Select atleast 1 checkbox';
     }
   });
+
+function createSelection(choiceMap) {
+  const selectedMovies = [];
+  for (let [key, value] of choiceMap) {
+    console.log(key, value);
+    if (value === true) {
+      movieData.forEach(function (movie) {
+        if (movie.contentRating === key) {
+          selectedMovies.push(movie);
+        }
+      });
+    }
+  }
+  updateCont(selectedMovies);
+  updateLegend(selectedMovies);
+  updateGross(selectedMovies);
+  updateDura(selectedMovies);
+  updateVotes(selectedMovies);
+}
+
+function updateCont(selectedMovies) {
+  let countU = 0,
+    count15 = 0,
+    count12A = 0,
+    countPG = 0;
+
+  const uniqueSet = new Set();
+  movieData.forEach(function (movie) {
+    uniqueSet.add(movie.contentRating);
+  });
+
+  for (let i = 0; i < uniqueSet.size; i++) {
+    d3.select('#cont').append('div');
+  }
+
+  selectedMovies.forEach(function (movie) {
+    if (movie.contentRating === 'U') {
+      countU++;
+    } else if (movie.contentRating === '15') {
+      count15++;
+    } else if (movie.contentRating === '12A') {
+      count12A++;
+    } else if (movie.contentRating === 'PG') {
+      countPG++;
+    }
+  });
+
+  d3.select('#cont div:nth-child(1)').html(
+    `
+      <h2>
+        ${countU}
+      </h2>
+      <p>"U" rating movie(s) selected</p>
+    `
+  );
+  d3.select('#cont div:nth-child(2)').html(
+    `
+      <h2>
+        ${count15}
+      </h2>
+      <p>"15" rating movie(s) selected</p>
+    `
+  );
+  d3.select('#cont div:nth-child(3)').html(
+    `
+      <h2>
+        ${count12A}
+      </h2>
+      <p>"12A" rating movie(s) selected</p>
+    `
+  );
+  d3.select('#cont div:nth-child(4)').html(
+    `
+      <h2>
+        ${countPG}
+      </h2>
+      <p>"PG" rating movie(s) selected</p>
+    `
+  );
+}
+
+function updateLegend(selectedMovies) {
+  selectedMovies.forEach(function (movie) {
+    const holder = d3.select('#legend').append('div');
+    holder
+      .append('div')
+      .style('width', '15px')
+      .style('height', '15px')
+      .style('background-color', `${movie.color}`);
+    holder.append('p').text(`${movie.name}`);
+  });
+}
+
+function updateGross(selectedMovies) {
+  selectedMovies.forEach(function (movie) {
+    d3.select('#gross')
+      .append('rect')
+      .attr('width', `${movie.gross / 2}`)
+      .attr('height', '20')
+      .attr('x', '0')
+      .attr('y', selectedMovies.indexOf(movie) * 25 + 25)
+      .style('fill', `${movie.color}`);
+
+    d3.select('#gross')
+      .append('text')
+      .text(`${movie.gross}`)
+      .attr('x', `${movie.gross / 2 + 5}`)
+      .attr('y', selectedMovies.indexOf(movie) * 25 + 40)
+      .style('font-size', '14')
+      .style('fill', 'rgb(63,63,63)');
+  });
+  d3.select('#gross')
+    .insert('text', 'rect')
+    .text('Gross collections in USD Million')
+    .attr('x', '0')
+    .attr('y', '15')
+    .style('font-size', '16')
+    .style('font-weight', '600')
+    .style('fill', 'rgb(63,63,63)');
+}
+
+function updateDura(selectedMovies) {
+  selectedMovies.forEach(function (movie) {
+    d3.select('#dura')
+      .append('rect')
+      .attr('width', `${movie.duration}`)
+      .attr('height', '20')
+      .attr('x', '0')
+      .attr('y', selectedMovies.indexOf(movie) * 25 + 25)
+      .style('fill', `${movie.color}`);
+
+    d3.select('#dura')
+      .append('text')
+      .text(`${movie.duration}`)
+      .attr('x', `${movie.duration + 5}`)
+      .attr('y', selectedMovies.indexOf(movie) * 25 + 40)
+      .style('font-size', '14')
+      .style('fill', 'rgb(63,63,63)');
+  });
+  d3.select('#dura')
+    .insert('text', 'rect')
+    .text('Duration in Minutes')
+    .attr('x', '0')
+    .attr('y', '15')
+    .style('font-size', '16')
+    .style('font-weight', '600')
+    .style('fill', 'rgb(63,63,63)');
+}
+
+function updateVotes(selectedMovies) {
+  let cxValue = 0;
+  let xValue = 0;
+
+  selectedMovies.forEach((movie) => {
+    d3.select('#votes')
+      .append('circle')
+      .attr('r', `${movie.votes / 20000}`)
+      .attr('cx', function () {
+        cxValue = cxValue + movie.votes / 20000 + 60;
+        return cxValue;
+      })
+      .attr('cy', '150')
+      .style('fill', `${movie.color}`);
+    d3.select('#votes')
+      .append('text')
+      .text(`${movie.votes}`)
+      .attr('text-anchor', 'middle')
+      .attr('x', function () {
+        xValue = xValue + movie.votes / 20000 + 60;
+        return xValue;
+      })
+      .attr('y', `${150 - movie.votes / 20000 - 10}`)
+      .style('font-size', '14')
+      .style('fill', 'rgb(63,63,63)');
+  });
+
+  d3.select('#votes')
+    .insert('text', 'circles')
+    .text('Number of votes')
+    .attr('x', '0')
+    .attr('y', '15')
+    .style('font-size', '16')
+    .style('font-weight', '600')
+    .style('fill', 'rgb(63,63,63)');
+}

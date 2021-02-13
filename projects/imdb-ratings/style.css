@@ -1,6 +1,7 @@
 :root {
   --blue: #005cc8;
   --bg-gray: rgba(241, 241, 241, 0.4);
+  --gray: rgb(63,63,63);
 }
 
 * {
@@ -119,6 +120,18 @@ label {
   display: flex;
   justify-content: space-evenly;
 }
+#cont div {
+  max-width: 100px;
+}
+#cont h2, #cont p {
+  margin: 0;
+}
+#cont h2 {
+  color: var(--blue);
+}
+#cont p {
+  color: var(--gray);
+}
 
 #legend {
   height: 50px;
@@ -127,6 +140,20 @@ label {
   flex-wrap: wrap;
   margin-top: 20px;
   margin-bottom: 30px;
+}
+#legend > div {
+  height: 25px;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+}
+#legend > div > div {
+  border-radius: 10px;
+}
+#legend > div > p {
+  margin: 0 0 0 5px;
+  font-size: small;
+  color: gray;
 }
 
 #gross {
